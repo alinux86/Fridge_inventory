@@ -1,6 +1,7 @@
 package com.example.myfridge.model.data
 
-class Products {
-    data class MyProducts (val name: String)
-
-}
+data class Products(
+    val name: String,
+    val quantity: Int,
+    val date: String
+)
