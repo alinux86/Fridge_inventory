@@ -9,27 +9,24 @@
     <!-- Product Name -->
     <EditText
         android:id="@+id/editTextProductName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
         android:hint="Product Name"
-        android:inputType="text" />
+        android:inputType="text|textAutoComplete|textAutoCorrect" />
 
     <!-- Quantity -->
     <EditText
         android:id="@+id/editTextQuantity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
         android:hint="Quantity"
         android:inputType="number" />
 
     <!-- Date -->
     <EditText
         android:id="@+id/editTextDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
         android:hint="Date"
         android:inputType="date" />
 </LinearLayout>
