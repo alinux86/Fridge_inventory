@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MonFrigo</string>
+    <string name="apple">pomme</string>
+    <string name="fish">poisson</string>
+    <string name="chips">chips</string>
 </resources>

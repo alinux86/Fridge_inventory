@@ -1,19 +1,19 @@
 package com.example.myfridge.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.R
-import com.example.myfridge.model.data.Products
+import com.example.myfridge.model.Product
 
-class ProductAdapter(private val products: ArrayList<Products>, private val productItems: List<ProductViewHolder>) :
-    RecyclerView.Adapter<ProductViewHolder>() {
+class ProductAdapter(val products: ArrayList<Product>): RecyclerView.Adapter<ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater
+        val layout = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.product_layout, parent, false)
-        return ProductViewHolder(view)
+        return ProductViewHolder(layout, parent.context)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -21,6 +21,6 @@ class ProductAdapter(private val products: ArrayList<Products>, private val prod
     }
 
     override fun getItemCount(): Int {
-        return productItems.size
+        return products.size
     }
 }

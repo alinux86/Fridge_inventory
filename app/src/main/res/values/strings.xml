@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MyFridge</string>
+    <string name="apple">apple</string>
+    <string name="fish">fish</string>
+    <string name="chips">chips</string>
+    <string name="carottes">carottes</string>
+    
+    <string name="quantity_1">5</string>
+    <string name="quantity_2">2</string>
+    <string name="quantity_3">3</string>
+    <string name="quantity_4">4</string>
+
+    <string name="date_1">05.12.2023</string>
+    <string name="date_2">07.11.2023</string>
+    <string name="date_3">18.05.2024</string>
+    <string name="date_4">20.11.2023</string>
 </resources>
