@@ -35,6 +35,7 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
             )
             writeJson(newProduct)
             logData()
+            finish()
         }
 
         var buttonLog: View = findViewById(R.id.buttonTestLogElements)
@@ -46,7 +47,9 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
         buttonDelete.setOnClickListener {
             clearJson()
             logData()
+            finish()
         }
+        logData()
     }
 
     fun logData() {
