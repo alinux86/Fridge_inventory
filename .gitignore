@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+/.idea/.gitignore
+/.idea/.name
+Guidelines-Projet-MWS.pdf
+rapport
