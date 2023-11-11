@@ -88,5 +88,34 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"
         app:layout_constraintVertical_bias="0.41000003" />
 
+    <Button
+        android:id="@+id/buttonTestAddElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="500dp"
+        android:text="Add item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loc_button_layout" />
+
+    <Button
+        android:id="@+id/buttonTestLogElements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="Log items"
+        app:layout_constraintStart_toEndOf="@+id/buttonTestAddElement"
+        app:layout_constraintTop_toTopOf="@+id/buttonTestAddElement" />
+
+    <Button
+        android:id="@+id/buttonTestDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="40dp"
+        android:text="Delete all"
+        app:layout_constraintStart_toStartOf="@+id/buttonTestAddElement"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTestAddElement" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
