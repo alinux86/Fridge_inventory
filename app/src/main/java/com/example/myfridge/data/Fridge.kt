@@ -1,5 +1,7 @@
 package com.example.myfridge.data
 
+import android.util.Log
+import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedWriter
@@ -8,6 +10,7 @@ import java.io.FileWriter
 import java.io.Writer
 
 class Product(var name: String, var quantity: String, var date: String, var index: Int) {}
+class NewProduct(val name: String, val quantity: String, val date: String) {}
 
 class Fridge(private var filesDir: File) {
 
@@ -21,7 +24,6 @@ class Fridge(private var filesDir: File) {
     }
 
     fun loadData() {
-
         val filePath = File(filesDir, "data.json")
         var jsonString = ""
         if (filePath.exists()) {
@@ -68,17 +70,53 @@ class Fridge(private var filesDir: File) {
         output.close()
     }
 
-    fun getData(): ArrayList<com.example.myfridge.data.Product> {
+    fun getData(): ArrayList<Product> {
         return productsListData
     }
 
-    fun updateItem(newProduct: com.example.myfridge.data.Product) {
+    fun addItem(newProduct: NewProduct) {
+        var maxIndex = 0
+        if (productsListData.size > 0) {
+            maxIndex = productsListData.maxBy { it.index }.index
+        }
+        var product =
+            Product(
+                name = newProduct.name,
+                quantity = newProduct.quantity,
+                date = newProduct.date,
+                index = maxIndex + 1
+            )
+        productsListData.add(product)
+        recalculateIndex()
         saveData()
     }
 
-    fun deleteItem(product: com.example.myfridge.data.Product) {
+    fun updateItem(/*newProduct: Product*/) {
+        saveData()
+    }
+
+    fun deleteItem(product: Product) {
         productsListData.removeAt(product.index)
         recalculateIndex()
         saveData()
+    }
+
+    fun getDataString(): String {
+        var string = ""
+        for (item in productsListData) {
+            string+="${item.name}\n\tQty: ${item.quantity}\tDate: ${item.date}\tIndex: ${item.index}\n"
+        }
+        return string
+    }
+
+    fun clearAll() {
+        val file = File(filesDir, "data.json")
+        if (file.exists()) {
+            var output: Writer
+
+            output = BufferedWriter(FileWriter(file))
+            output.write("")
+            output.close()
+        }
     }
 }

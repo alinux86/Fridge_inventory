@@ -36,7 +36,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Date"
-            android:inputType="date" />
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:inputType="none"/>
 
         <LinearLayout
             android:id="@+id/buttonsContainer"

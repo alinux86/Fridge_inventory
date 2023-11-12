@@ -15,11 +15,12 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
 
     lateinit var fridge: Fridge
     lateinit var adapter : ProductAdapter
+    lateinit var layout : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        layout  = findViewById(R.id.activity_main_layout)
         val buttonActivityAdd : View = findViewById(R.id.floatingActionButtonAddElement)
 
         buttonActivityAdd.setOnClickListener {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     override fun onResume() {
         super.onResume()
 
-        var layout : View = findViewById(R.id.activity_main_layout)
+
         layout.clearFocus()
 
         fridge = Fridge(filesDir)
@@ -42,6 +43,13 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
         recyclerView.adapter = adapter
     }
 
+    override fun onPause() {
+        super.onPause()
+//        var layout : View = findViewById(R.id.activity_main_layout)
+        layout.clearFocus()
+        fridge.saveData()
+    }
+
     override fun onDeleteItem(product: Product, position: Int) {
         fridge.deleteItem(product)
         adapter.notifyItemRemoved(position)
@@ -49,7 +57,7 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     }
 
     override fun onUpdateItem(newProduct: Product, position: Int) {
-        fridge.updateItem(newProduct)
+        fridge.updateItem(/*newProduct*/)
     }
 }
 
