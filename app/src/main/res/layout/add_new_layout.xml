@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextTestName"
+            android:id="@+id/editTextNewProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -23,7 +23,7 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/editTextTestQuantity"
+            android:id="@+id/editTextNewProductQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,7 +31,7 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/editTextTestDate"
+            android:id="@+id/editTextNewProductDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

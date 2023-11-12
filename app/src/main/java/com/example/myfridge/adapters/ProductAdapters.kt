@@ -1,18 +1,22 @@
 package com.example.myfridge.adapters
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.R
-import com.example.myfridge.data.ProductTest
+import com.example.myfridge.data.Product
 
-class ProductAdapter(val products: ArrayList<ProductTest>, val context: Context) :
+interface ProductAdapterListener {
+    fun onDeleteItem(product: Product, position: Int)
+    fun onUpdateItem(newProduct: Product, position: Int)
+}
+
+class ProductAdapter(val products: ArrayList<Product>, val listener: ProductAdapterListener) :
     RecyclerView.Adapter<ProductViewHolder>() {
-
-//    lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layout = LayoutInflater
@@ -24,10 +28,35 @@ class ProductAdapter(val products: ArrayList<ProductTest>, val context: Context)
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.setupHolder(products[position])
-        var deleteButton = holder.itemView.findViewById<ImageView>(R.id.imageView)
-        deleteButton.setOnClickListener {
-            Log.i("debug", "Delete position $position")
 
+        var product: Product = products[position]
+
+        var nameTextView: TextView = holder.itemView.findViewById(R.id.editTextProductName)
+        var quantityTextView: TextView = holder.itemView.findViewById(R.id.editTextQuantity)
+        var dateTextView: TextView = holder.itemView.findViewById(R.id.editTextDate)
+        var deleteButton = holder.itemView.findViewById<ImageView>(R.id.imageView)
+
+        nameTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                Log.i("debug", "Name focus event. Position $position")
+                product.name = nameTextView.text.toString()
+                listener.onUpdateItem(product, position)
+            }
+        }
+        quantityTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                product.quantity = quantityTextView.text.toString()
+                listener.onUpdateItem(product, position)
+            }
+        }
+        dateTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                product.date = dateTextView.text.toString()
+                listener.onUpdateItem(product, position)
+            }
+        }
+        deleteButton.setOnClickListener {
+            listener.onDeleteItem(product, position)
         }
 
     }
@@ -35,8 +64,4 @@ class ProductAdapter(val products: ArrayList<ProductTest>, val context: Context)
     override fun getItemCount(): Int {
         return products.size
     }
-
-//    fun addContext(context: Context) {
-//        this.context = context
-//    };
 }

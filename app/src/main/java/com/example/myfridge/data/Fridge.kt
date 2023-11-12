@@ -1,69 +1,84 @@
 package com.example.myfridge.data
 
-import android.util.Log
-import com.example.myfridge.R
-import com.example.myfridge.model.Product
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
+import java.io.Writer
 
-class ProductTest() {
-    lateinit var name: String
-    lateinit var quantity: String
-    lateinit var date: String
-    lateinit var index: String
-}
+class Product(var name: String, var quantity: String, var date: String, var index: Int) {}
 
+class Fridge(private var filesDir: File) {
 
-class Fridge {
+    private var jsonDataString: String = ""
+    private var productsListData: ArrayList<Product> = ArrayList()
 
-    var jsonData: String = ""
-    var jsonObject: JSONObject = JSONObject()
-    var productsListData: ArrayList<ProductTest> = ArrayList()
-    fun allFridge(): List<Product> {
-        return listOf(
-            Product(name = R.string.apple, quantity = R.string.quantity_1, date = R.string.date_1),
-            Product(name = R.string.fish, quantity = R.string.quantity_2, date = R.string.date_2),
-            Product(name = R.string.chips, quantity = R.string.quantity_3, date = R.string.date_3),
-            Product(
-                name = R.string.carottes,
-                quantity = R.string.quantity_4,
-                date = R.string.date_4
-            )
-        )
+    fun recalculateIndex() {
+        for (i in 0..<productsListData.size) {
+            productsListData[i].index = i
+        }
     }
 
+    fun loadData() {
 
-    fun loadData(jsonString: String) {
+        val filePath = File(filesDir, "data.json")
+        var jsonString = ""
+        if (filePath.exists()) {
+            jsonString = filePath.readText()
+        }
+
         if (jsonString != "") {
-            jsonData = jsonString
-            jsonObject = JSONObject(jsonString)
-            Log.i("debug", "Load data. Json object : ${jsonObject.toString()}")
-//        lateinit var listProducts: ArrayList<ProductTest>
+            jsonDataString = jsonString
+            var jsonObject = JSONObject(jsonString)
 
             var dataArray = jsonObject.optJSONArray("data")
             if (dataArray != null) {
                 for (i in 0..<dataArray.length()) {
-                    Log.i("debug", dataArray.toString())
                     var jsonObj = dataArray.optJSONObject(i)
-                    var product: ProductTest = ProductTest()
-                    product.name = jsonObj.getString("productName")
-                    product.quantity = jsonObj.getString("quantity")
-                    product.date = jsonObj.getString("date")
-                    product.index = i.toString()
+                    var product = Product(
+                        jsonObj.getString("productName"),
+                        jsonObj.getString("quantity"),
+                        jsonObj.getString("date"),
+                        i
+                    )
                     productsListData.add(product)
                 }
             }
         }
     }
 
-    fun getData(): ArrayList<ProductTest> {
+    fun saveData() {
+        var jsonObjectContainer = JSONObject()
+        var jsonDataArray = JSONArray()
+        for (item in productsListData) {
+            var jsonObjectItem = JSONObject()
+            jsonObjectItem.put("productName", item.name)
+            jsonObjectItem.put("quantity", item.quantity)
+            jsonObjectItem.put("date", item.date)
+            jsonDataArray.put(jsonObjectItem)
+        }
+        jsonObjectContainer.put("data", jsonDataArray)
+        jsonDataString = jsonObjectContainer.toString()
+        var output: Writer
+        var file: File = File(filesDir, "data.json")
+
+        output = BufferedWriter(FileWriter(file))
+        output.write(jsonDataString)
+        output.close()
+    }
+
+    fun getData(): ArrayList<com.example.myfridge.data.Product> {
         return productsListData
     }
 
-    fun deleteItem(position : Int) {
-        Log.i("debug", "Json content : ${jsonObject.toString()}")
-        var array = jsonObject.optJSONArray("data")
-        Log.i("debug", "Array content : ${array.toString()}")
-        array.remove(position)
-        Log.i("debug", "Json content : ${jsonObject.toString()}")
+    fun updateItem(newProduct: com.example.myfridge.data.Product) {
+        saveData()
+    }
+
+    fun deleteItem(product: com.example.myfridge.data.Product) {
+        productsListData.removeAt(product.index)
+        recalculateIndex()
+        saveData()
     }
 }

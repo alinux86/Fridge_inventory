@@ -13,7 +13,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.Writer
 
-class Product(val name: String, val quantity: String, val date: String) {
+class NewProduct(val name: String, val quantity: String, val date: String) {
 }
 
 class ActivityAddPersistentDataTest : AppCompatActivity() {
@@ -21,14 +21,14 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_new_layout)
 
-        val nameText: TextView = findViewById(R.id.editTextTestName)
-        val quantityText: TextView = findViewById(R.id.editTextTestQuantity)
-        val dateText: TextView = findViewById(R.id.editTextTestDate)
+        val nameText: TextView = findViewById(R.id.editTextNewProductName)
+        val quantityText: TextView = findViewById(R.id.editTextNewProductQuantity)
+        val dateText: TextView = findViewById(R.id.editTextNewProductDate)
         var logProductsText: TextView = findViewById(R.id.textViewItemsList)
 
         var buttonAdd: View = findViewById(R.id.buttonTestAddElement)
         buttonAdd.setOnClickListener {
-            var newProduct = Product(
+            var newProduct = NewProduct(
                 nameText.text.toString(),
                 quantityText.text.toString(),
                 dateText.text.toString()
@@ -58,7 +58,7 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
         logProductsText.text = valuesString
     }
 
-    fun writeJson(product: Product) {
+    fun writeJson(product: NewProduct) {
         Log.i("MainActivity", "writeJson called")
 
         var container = JSONArray()
@@ -66,22 +66,12 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
 
         val filePath = File(filesDir, "data.json")
         if (filePath.exists() && filePath.readText() != "") {
-            // Le fichier existe, vous pouvez le lire
             var jsonString = filePath.readText()
             Log.i("MainActivity", "JSON String : $jsonString")
             container = JSONObject(jsonString).optJSONArray("data")
-            // Maintenant, vous avez le contenu du fichier JSON dans la variable "jsonString"
-        } else {
-            // Le fichier n'existe pas, gérer le cas où le fichier est introuvable
-            // Vous pouvez afficher un message d'erreur ou effectuer d'autres actions nécessaires.
-//            val container = JSONArray()
-//            val json = JSONObject()
         }
 
         val objContainer = JSONObject()
-//        val container = JSONArray()
-//        val json = JSONObject()
-
 
         json.put("productName", product.name)
         json.put("quantity", product.quantity)
@@ -97,25 +87,19 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
         output.write(objContainer.toString())
         output.close()
         Toast.makeText(this, "Test ok", Toast.LENGTH_LONG).show()
-        Log.i("MainActivity", "writeJson ended")
     }
 
     fun getJsonValues(): String {
         val filePath = File(filesDir, "data.json")
         var jsonString = ""
         if (filePath.exists()) {
-            // Le fichier existe, vous pouvez le lire
             jsonString = filePath.readText()
-            Log.i("MainActivity", jsonString)
-            // Maintenant, vous avez le contenu du fichier JSON dans la variable "jsonString"
         }
 
         return jsonString
     }
 
     fun clearJson() {
-
-
         val filePath = File(filesDir, "data.json")
         if (filePath.exists()) {
             var output: Writer
@@ -125,8 +109,6 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
             output.write("")
             output.close()
             Toast.makeText(this, "Data cleared", Toast.LENGTH_LONG).show()
-
         }
-
     }
 }
