@@ -1,18 +1,30 @@
 package com.example.myfridge
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import com.example.myfridge.data.Product
 import java.util.Calendar
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
+    companion object {
+        fun newInstance(editText: EditText, product: Product? = null): DatePickerFragment {
+            val fragment = DatePickerFragment()
+            fragment.editText = editText
+            fragment.product = product
+            return fragment
+        }
+    }
+
+    private var editText: EditText? = null
+    private var product: Product? = null
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         // Use the current date as the default date in the picker.
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -26,8 +38,11 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val dateString = "${day}.${month+1}.${year}"
-        val activity = activity as ActivityAddPersistentDataTest?
-        activity?.findViewById<EditText>(R.id.editTextNewProductDate)?.setText(dateString)
+//        val activity = activity as ActivityAddPersistentDataTest?
+//        activity?.findViewById<EditText>(R.id.editTextNewProductDate)?.setText(dateString)
+        editText?.setText(dateString)
+//        product?.date = dateString
+
         return
     }
 }

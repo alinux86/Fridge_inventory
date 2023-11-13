@@ -119,4 +119,7 @@ class Fridge(private var filesDir: File) {
             output.close()
         }
     }
+    fun length(): Int {
+        return productsListData.size
+    }
 }

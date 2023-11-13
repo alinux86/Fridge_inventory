@@ -3,7 +3,9 @@ package com.example.myfridge
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.adapters.ProductAdapter
 import com.example.myfridge.adapters.ProductAdapterListener
@@ -16,15 +18,21 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     lateinit var fridge: Fridge
     lateinit var adapter : ProductAdapter
     lateinit var layout : View
+    lateinit var noItemTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         layout  = findViewById(R.id.activity_main_layout)
         val buttonActivityAdd : View = findViewById(R.id.floatingActionButtonAddElement)
+        noItemTextView = findViewById(R.id.textViewNoItem)
+
+        var intent = Intent(this, ActivityAddPersistentDataTest::class.java)
 
         buttonActivityAdd.setOnClickListener {
-            var intent = Intent(this, ActivityAddPersistentDataTest::class.java)
+            startActivity(intent)
+        }
+        noItemTextView.setOnClickListener {
             startActivity(intent)
         }
     }
@@ -38,8 +46,10 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
         fridge = Fridge(filesDir)
         fridge.loadData()
 
+        setNoItemViewVisibility()
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        adapter = ProductAdapter(fridge.getData(), this)
+        adapter = ProductAdapter(fridge.getData(), this, supportFragmentManager)
         recyclerView.adapter = adapter
     }
 
@@ -54,10 +64,23 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
         fridge.deleteItem(product)
         adapter.notifyItemRemoved(position)
         adapter.notifyItemRangeChanged(position, adapter.itemCount)
+        setNoItemViewVisibility()
     }
 
     override fun onUpdateItem(newProduct: Product, position: Int) {
         fridge.updateItem(/*newProduct*/)
+    }
+
+    private fun setNoItemViewVisibility() {
+
+        Log.i("debug", "Item length: ${fridge.length()}")
+        if (fridge.length() > 0) {
+            Log.i("debug", "noItemTextView is visible")
+            noItemTextView.visibility = View.GONE
+        } else {
+            Log.i("debug", "noItemTextView is gone")
+            noItemTextView.visibility = View.VISIBLE
+        }
     }
 }
 

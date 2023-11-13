@@ -4,9 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfridge.DatePickerFragment
 import com.example.myfridge.R
 import com.example.myfridge.data.Product
 
@@ -15,7 +18,11 @@ interface ProductAdapterListener {
     fun onUpdateItem(newProduct: Product, position: Int)
 }
 
-class ProductAdapter(val products: ArrayList<Product>, val listener: ProductAdapterListener) :
+class ProductAdapter(
+    val products: ArrayList<Product>,
+    val listener: ProductAdapterListener,
+    val fragmentManager: FragmentManager
+) :
     RecyclerView.Adapter<ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -31,16 +38,16 @@ class ProductAdapter(val products: ArrayList<Product>, val listener: ProductAdap
 
         var product: Product = products[position]
 
-        var nameTextView: TextView = holder.itemView.findViewById(R.id.editTextProductName)
-        var quantityTextView: TextView = holder.itemView.findViewById(R.id.editTextQuantity)
-        var dateTextView: TextView = holder.itemView.findViewById(R.id.editTextDate)
+        var nameTextView: EditText = holder.itemView.findViewById(R.id.editTextProductName)
+        var quantityTextView: EditText = holder.itemView.findViewById(R.id.editTextQuantity)
+        var dateTextView: EditText = holder.itemView.findViewById(R.id.editTextDate)
         var deleteButton = holder.itemView.findViewById<ImageView>(R.id.imageView)
 
         nameTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                Log.i("debug", "Name focus event. Position $position")
                 product.name = nameTextView.text.toString()
                 listener.onUpdateItem(product, position)
+//                nameTextView.clearFocus()
             }
         }
         quantityTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -49,11 +56,13 @@ class ProductAdapter(val products: ArrayList<Product>, val listener: ProductAdap
                 listener.onUpdateItem(product, position)
             }
         }
-        dateTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                product.date = dateTextView.text.toString()
-                listener.onUpdateItem(product, position)
-            }
+        dateTextView.setOnClickListener {
+            val newFragment = DatePickerFragment.newInstance(dateTextView, product)
+            newFragment.show(fragmentManager, "datePicker")
+        }
+        dateTextView.doAfterTextChanged {
+            product.date = dateTextView.text.toString()
+            listener.onUpdateItem(product, position)
         }
         deleteButton.setOnClickListener {
             listener.onDeleteItem(product, position)
