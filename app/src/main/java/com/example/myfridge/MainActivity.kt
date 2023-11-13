@@ -3,7 +3,6 @@ package com.example.myfridge
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
         val buttonActivityAdd : View = findViewById(R.id.floatingActionButtonAddElement)
         noItemTextView = findViewById(R.id.textViewNoItem)
 
-        var intent = Intent(this, ActivityAddPersistentDataTest::class.java)
+        var intent = Intent(this, ActivityAddPersistentData::class.java)
 
         buttonActivityAdd.setOnClickListener {
             startActivity(intent)
@@ -73,12 +72,9 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
 
     private fun setNoItemViewVisibility() {
 
-        Log.i("debug", "Item length: ${fridge.length()}")
         if (fridge.length() > 0) {
-            Log.i("debug", "noItemTextView is visible")
             noItemTextView.visibility = View.GONE
         } else {
-            Log.i("debug", "noItemTextView is gone")
             noItemTextView.visibility = View.VISIBLE
         }
     }

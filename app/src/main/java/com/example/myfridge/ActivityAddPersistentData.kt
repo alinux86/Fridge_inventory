@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import com.example.myfridge.data.Fridge
 import com.example.myfridge.data.NewProduct
 
 
-class ActivityAddPersistentDataTest : AppCompatActivity() {
+class ActivityAddPersistentData : AppCompatActivity() {
 
     lateinit var fridge: Fridge
     lateinit var layout : View
@@ -30,7 +29,7 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
         val quantityText: EditText = findViewById(R.id.editTextNewProductQuantity)
         val dateText: EditText = findViewById(R.id.editTextNewProductDate)
 
-        var buttonAdd: View = findViewById(R.id.buttonTestAddElement)
+        var buttonAdd: View = findViewById(R.id.buttonAddElement)
 
         dateText.setOnClickListener {
             layout.clearFocus()
@@ -47,31 +46,31 @@ class ActivityAddPersistentDataTest : AppCompatActivity() {
                 dateText.text.toString()
             )
             fridge.addItem(newProduct)
-            logData()
+//            logData()
             finish()
         }
 
-        var buttonLog: View = findViewById(R.id.buttonTestLogElements)
-        buttonLog.setOnClickListener {
-            logData()
-        }
+//        var buttonLog: View = findViewById(R.id.buttonTestLogElements)
+//        buttonLog.setOnClickListener {
+//            logData()
+//        }
 
-        var buttonDelete: View = findViewById(R.id.buttonTestDelete)
-        buttonDelete.setOnClickListener {
-            clearJson()
-            logData()
-            finish()
-        }
-        logData()
+//        var buttonDelete: View = findViewById(R.id.buttonTestDelete)
+//        buttonDelete.setOnClickListener {
+//            clearJson()
+//            logData()
+//            finish()
+//        }
+//        logData()
     }
 
-    fun logData() {
-        var valuesString = fridge.getDataString()
-        var logProductsText: TextView = findViewById(R.id.textViewItemsList)
-        logProductsText.text = valuesString
-    }
+//    fun logData() {
+//        var valuesString = fridge.getDataString()
+//        var logProductsText: TextView = findViewById(R.id.textViewItemsList)
+//        logProductsText.text = valuesString
+//    }
 
-    fun clearJson() {
-        fridge.clearAll()
-    }
+//    fun clearJson() {
+//        fridge.clearAll()
+//    }
 }

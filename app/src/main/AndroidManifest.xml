@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MyFridge"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityAddPersistentDataTest"
+            android:name=".ActivityAddPersistentData"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
