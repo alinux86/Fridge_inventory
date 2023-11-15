@@ -1,8 +1,10 @@
 package com.example.myfridge
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -13,7 +15,8 @@ import com.example.myfridge.data.NewProduct
 class ActivityAddPersistentData : AppCompatActivity() {
 
     lateinit var fridge: Fridge
-    lateinit var layout : View
+    lateinit var layout: View
+    var stock: String = "Fridge"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +24,17 @@ class ActivityAddPersistentData : AppCompatActivity() {
 
         fridge = Fridge(filesDir)
         fridge.loadData()
-        layout  = findViewById(R.id.activity_add_new_layout)
+        layout = findViewById(R.id.activity_add_new_layout)
+        val intent: Intent = intent
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         val nameText: EditText = findViewById(R.id.editTextNewProductName)
         val quantityText: EditText = findViewById(R.id.editTextNewProductQuantity)
         val dateText: EditText = findViewById(R.id.editTextNewProductDate)
+
+
+        val stock: String? = intent.getStringExtra("Stock")
 
         var buttonAdd: View = findViewById(R.id.buttonAddElement)
 
@@ -41,12 +48,13 @@ class ActivityAddPersistentData : AppCompatActivity() {
 
         buttonAdd.setOnClickListener {
             var newProduct = NewProduct(
-                nameText.text.toString(),
-                quantityText.text.toString(),
-                dateText.text.toString()
+                name = nameText.text.toString(),
+                quantity = quantityText.text.toString(),
+                date = dateText.text.toString(),
+                stock = this.stock
             )
             fridge.addItem(newProduct)
-//            logData()
+            logData()
             finish()
         }
 
@@ -64,11 +72,9 @@ class ActivityAddPersistentData : AppCompatActivity() {
 //        logData()
     }
 
-//    fun logData() {
-//        var valuesString = fridge.getDataString()
-//        var logProductsText: TextView = findViewById(R.id.textViewItemsList)
-//        logProductsText.text = valuesString
-//    }
+    fun logData() {
+        Log.i("debug", fridge.getDataString())
+    }
 
 //    fun clearJson() {
 //        fridge.clearAll()

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     lateinit var adapter : ProductAdapter
     lateinit var layout : View
     lateinit var noItemTextView : TextView
+    var stock : String = "Fridge"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
         noItemTextView = findViewById(R.id.textViewNoItem)
 
         var intent = Intent(this, ActivityAddPersistentData::class.java)
+        intent.putExtra("Stock", stock)
 
         buttonActivityAdd.setOnClickListener {
             startActivity(intent)

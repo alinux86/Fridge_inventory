@@ -9,8 +9,8 @@ import java.io.File
 import java.io.FileWriter
 import java.io.Writer
 
-class Product(var name: String, var quantity: String, var date: String, var index: Int) {}
-class NewProduct(val name: String, val quantity: String, val date: String) {}
+class Product(var name: String, var quantity: String, var date: String, val stock: String, var index: Int) {}
+class NewProduct(val name: String, val quantity: String, val date: String, val stock: String) {}
 
 class Fridge(private var filesDir: File) {
 
@@ -39,10 +39,11 @@ class Fridge(private var filesDir: File) {
                 for (i in 0..<dataArray.length()) {
                     var jsonObj = dataArray.optJSONObject(i)
                     var product = Product(
-                        jsonObj.getString("productName"),
-                        jsonObj.getString("quantity"),
-                        jsonObj.getString("date"),
-                        i
+                        name = jsonObj.getString("productName"),
+                        quantity = jsonObj.getString("quantity"),
+                        date = jsonObj.getString("date"),
+                        stock = jsonObj.getString("stock"),
+                        index = i,
                     )
                     productsListData.add(product)
                 }
@@ -58,6 +59,7 @@ class Fridge(private var filesDir: File) {
             jsonObjectItem.put("productName", item.name)
             jsonObjectItem.put("quantity", item.quantity)
             jsonObjectItem.put("date", item.date)
+            jsonObjectItem.put("stock", item.stock)
             jsonDataArray.put(jsonObjectItem)
         }
         jsonObjectContainer.put("data", jsonDataArray)
@@ -84,6 +86,7 @@ class Fridge(private var filesDir: File) {
                 name = newProduct.name,
                 quantity = newProduct.quantity,
                 date = newProduct.date,
+                stock= newProduct.stock,
                 index = maxIndex + 1
             )
         productsListData.add(product)
@@ -104,7 +107,7 @@ class Fridge(private var filesDir: File) {
     fun getDataString(): String {
         var string = ""
         for (item in productsListData) {
-            string+="${item.name}\n\tQty: ${item.quantity}\tDate: ${item.date}\tIndex: ${item.index}\n"
+            string+="${item.name}\n\tQty: ${item.quantity}\tDate: ${item.date}\tIndex: ${item.index}\tStock:${item.stock}\n"
         }
         return string
     }
