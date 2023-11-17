@@ -8,8 +8,20 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.Writer
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
-class Product(var name: String, var quantity: String, var date: String, val stock: String, var index: Int) {}
+class Product(
+    var name: String,
+    var quantity: String,
+    var date: String,
+    val stock: String,
+    var index: Int
+) {}
+
 class NewProduct(val name: String, val quantity: String, val date: String, val stock: String) {}
 
 class Fridge(private var filesDir: File) {
@@ -18,6 +30,23 @@ class Fridge(private var filesDir: File) {
     private var productsListData: ArrayList<Product> = ArrayList()
 
     fun recalculateIndex() {
+        productsListData.sortWith(Comparator { product1, product2 ->
+            val date1 = product1.date
+            val date2 = product2.date
+
+            when {
+                date1.isNullOrEmpty() && date2.isNullOrEmpty() -> 0 // Les deux dates sont vides, considérez-les égales
+                date1.isNullOrEmpty() -> -1 // La première date est vide, placez-la avant
+                date2.isNullOrEmpty() -> 1 // La deuxième date est vide, placez-la avant
+                else -> {
+                    // Les deux dates sont non vides, comparez-les
+                    val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                    val parsedDate1 = dateFormat.parse(date1) ?: Date(0)
+                    val parsedDate2 = dateFormat.parse(date2) ?: Date(0)
+                    parsedDate1.compareTo(parsedDate2)
+                }
+            }
+        })
         for (i in 0..<productsListData.size) {
             productsListData[i].index = i
         }
@@ -35,6 +64,7 @@ class Fridge(private var filesDir: File) {
             var jsonObject = JSONObject(jsonString)
 
             var dataArray = jsonObject.optJSONArray("data")
+
             if (dataArray != null) {
                 for (i in 0..<dataArray.length()) {
                     var jsonObj = dataArray.optJSONObject(i)
@@ -47,6 +77,7 @@ class Fridge(private var filesDir: File) {
                     )
                     productsListData.add(product)
                 }
+                recalculateIndex()
             }
         }
     }
@@ -86,7 +117,7 @@ class Fridge(private var filesDir: File) {
                 name = newProduct.name,
                 quantity = newProduct.quantity,
                 date = newProduct.date,
-                stock= newProduct.stock,
+                stock = newProduct.stock,
                 index = maxIndex + 1
             )
         productsListData.add(product)
@@ -107,7 +138,7 @@ class Fridge(private var filesDir: File) {
     fun getDataString(): String {
         var string = ""
         for (item in productsListData) {
-            string+="${item.name}\n\tQty: ${item.quantity}\tDate: ${item.date}\tIndex: ${item.index}\tStock:${item.stock}\n"
+            string += "${item.name}\n\tQty: ${item.quantity}\tDate: ${item.date}\tIndex: ${item.index}\tStock:${item.stock}\n"
         }
         return string
     }
@@ -122,7 +153,9 @@ class Fridge(private var filesDir: File) {
             output.close()
         }
     }
+
     fun length(): Int {
         return productsListData.size
     }
 }
+

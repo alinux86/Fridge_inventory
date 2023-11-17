@@ -1,5 +1,6 @@
 package com.example.myfridge.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.DatePickerFragment
 import com.example.myfridge.R
 import com.example.myfridge.data.Product
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 interface ProductAdapterListener {
     fun onDeleteItem(product: Product, position: Int)
@@ -43,6 +49,11 @@ class ProductAdapter(
         var dateTextView: EditText = holder.itemView.findViewById(R.id.editTextDate)
         var deleteButton = holder.itemView.findViewById<ImageView>(R.id.imageView)
 
+        var defaultColor :Int =dateTextView.textColors.defaultColor
+
+        isDateExpired(product.date)
+            setDateTextColor(dateTextView, product, defaultColor)
+
         nameTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 product.name = nameTextView.text.toString()
@@ -63,11 +74,43 @@ class ProductAdapter(
         dateTextView.doAfterTextChanged {
             product.date = dateTextView.text.toString()
             listener.onUpdateItem(product, position)
+            setDateTextColor(dateTextView, product, defaultColor)
         }
         deleteButton.setOnClickListener {
             listener.onDeleteItem(product, position)
+
         }
 
+    }
+
+    fun setDateTextColor(dateTextView : EditText, product: Product, defaultColor: Int) {
+        Log.i("debug", "setDateTextColor")
+        if (isDateExpired(product.date)) {
+            dateTextView.setTextColor(Color.parseColor("red"))
+        } else {
+            Log.i("debug", "defaultColor")
+            dateTextView.setTextColor(defaultColor)
+        }
+    }
+    fun isDateExpired(dateString: String): Boolean {
+        var isDateExpired = false
+        if (!dateString.isNullOrEmpty()) {
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            val today = calendar.time
+//            Log.i("debug", "Today $today")
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val parsedDate = dateFormat.parse(dateString) ?: Date(0)
+//            Log.i("debug", "ParsedDate $parsedDate")
+            if (parsedDate <= today) {
+                isDateExpired = true
+            }
+//            Log.i("debug", "isDateExpired ? $isDateExpired")
+        }
+        return isDateExpired
     }
 
     override fun getItemCount(): Int {
