@@ -15,6 +15,18 @@
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <EditText
+            android:id="@+id/editTextBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="Barcode" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Product Name"
+            android:onClick="onSubmitButtonClick" />
 
         <EditText
             android:id="@+id/editTextNewProductName"
