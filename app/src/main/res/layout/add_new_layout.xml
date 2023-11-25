@@ -20,13 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:ems="10"
-            android:hint="Barcode" />
+            android:hint="Barcode"
+            android:text="4012359144003"/>
 
         <Button
+            android:id="@+id/buttonGetProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Get Product Name"
-            android:onClick="onSubmitButtonClick" />
+            android:text="Get Product Name" />
 
         <EditText
             android:id="@+id/editTextNewProductName"

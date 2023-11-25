@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.example.myfridge.api.getProduct
 import com.example.myfridge.data.Fridge
 import com.example.myfridge.data.NewProduct
 
@@ -32,11 +33,13 @@ class ActivityAddPersistentData : AppCompatActivity() {
         val nameText: EditText = findViewById(R.id.editTextNewProductName)
         val quantityText: EditText = findViewById(R.id.editTextNewProductQuantity)
         val dateText: EditText = findViewById(R.id.editTextNewProductDate)
-
+        val productCodeText : EditText = findViewById(R.id.editTextBarcode)
 
         val stock: String? = intent.getStringExtra("Stock")
 
         var buttonAdd: View = findViewById(R.id.buttonAddElement)
+        val buttonApi: View = findViewById(R.id.buttonGetProduct)
+
 
         dateText.setOnClickListener {
             layout.clearFocus()
@@ -56,6 +59,11 @@ class ActivityAddPersistentData : AppCompatActivity() {
             fridge.addItem(newProduct)
             logData()
             finish()
+        }
+
+        buttonApi.setOnClickListener{
+            Log.i("contenu", "Call api")
+            getProduct(productCodeText.text.toString(), nameText)
         }
 
 //        var buttonLog: View = findViewById(R.id.buttonTestLogElements)
@@ -79,4 +87,5 @@ class ActivityAddPersistentData : AppCompatActivity() {
 //    fun clearJson() {
 //        fridge.clearAll()
 //    }
+
 }
