@@ -33,6 +33,10 @@ fun getProduct(productCode : String, productNameTextField: EditText, context: Co
         override fun onResponse(call: Call<ProductInfo>, response: Response<ProductInfo>) {
             Log.i("contenu", "Raw response: ${response}")
             if (response.isSuccessful) {
+                if (response.code() == 404) {
+                    Log.i("contenu", "Raw response: ${response.code()}")
+                    showToast404(context, "Product not found. Please try again.")
+                }
                 response.body()?.let {
                     productInfo -> Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                     productNameTextField.setText(productInfo.product?.product_name)
@@ -56,4 +60,8 @@ private fun showToastError(context: Context, message : String) {
 
 private fun showToastSuccess(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+private fun showToast404(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
