@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import com.example.myfridge.api.getProduct
 import com.example.myfridge.data.Fridge
 import com.example.myfridge.data.NewProduct
@@ -27,6 +28,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
         fridge.loadData()
         layout = findViewById(R.id.activity_add_new_layout)
         val intent: Intent = intent
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
 
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
@@ -63,7 +65,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
 
         buttonApi.setOnClickListener{
             Log.i("contenu", "Call api")
-            getProduct(productCodeText.text.toString(), nameText, this)
+            getProduct(productCodeText.text.toString(), nameText, this, progressBar)
         }
 
 //        var buttonLog: View = findViewById(R.id.buttonTestLogElements)
