@@ -63,7 +63,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
 
         buttonApi.setOnClickListener{
             Log.i("contenu", "Call api")
-            getProduct(productCodeText.text.toString(), nameText)
+            getProduct(productCodeText.text.toString(), nameText, this)
         }
 
 //        var buttonLog: View = findViewById(R.id.buttonTestLogElements)

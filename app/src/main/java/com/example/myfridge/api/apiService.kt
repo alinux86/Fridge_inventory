@@ -1,7 +1,9 @@
 package com.example.myfridge.api
 
+import android.content.Context
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import com.example.myfridge.model.ProductInfo
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,7 +26,8 @@ private val retrofit by lazy {
 
 private val theApiService by lazy { retrofit.create(apiService::class.java) }
 
-fun getProduct(productCode : String, productNameTextField: EditText) {
+
+fun getProduct(productCode : String, productNameTextField: EditText, context: Context) {
     val call = theApiService.getProductInfo(productCode)
     call.enqueue(object : Callback<ProductInfo> {
         override fun onResponse(call: Call<ProductInfo>, response: Response<ProductInfo>) {
@@ -34,6 +37,7 @@ fun getProduct(productCode : String, productNameTextField: EditText) {
                     productInfo -> Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                     productNameTextField.setText(productInfo.product?.product_name)
                     Log.i("contenu", "Raw response : ${response.body()}")
+                    showToastSuccess(context, "Product found!")
                 }
 //
             }
@@ -41,6 +45,15 @@ fun getProduct(productCode : String, productNameTextField: EditText) {
 
         override fun onFailure(call: Call<ProductInfo>, t: Throwable) {
             Log.e("MainActivity", "Failed to get result: ${t.message}")
+            showToastError (context, "Error in the request: ${t.message}")
         }
     })
+}
+
+private fun showToastError(context: Context, message : String) {
+    Toast.makeText(context , message, Toast.LENGTH_SHORT).show()
+}
+
+private fun showToastSuccess(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
