@@ -38,15 +38,17 @@ fun getProduct(productCode : String, productNameTextField: EditText, context: Co
             Log.i("contenu", "Raw response: ${response}")
             if (response.isSuccessful) {
                 if (response.code() == 404) {
-                    Log.i("contenu", "Raw response: ${response.code()}")
+                    Log.i("code404", "Raw response: ${response.code()}")
                     showToast404(context, "Product not found. Please try again.")
-                } else {
+                } else if (response.code() == 200) {
                     response.body()?.let { productInfo ->
                         Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                         productNameTextField.setText(productInfo.product?.product_name)
                         Log.i("contenu", "Raw response : ${response.body()}")
                         showToastSuccess(context, "Product found!")
                     }
+                } else {
+                    Log.e("nocode", "goes wrong")
                 }
             }
         }
