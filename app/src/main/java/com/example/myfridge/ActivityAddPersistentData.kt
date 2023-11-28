@@ -69,7 +69,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
             Log.i("contenu", "Call api")
             layout.clearFocus()
             imm.hideSoftInputFromWindow(layout.windowToken, 0)
-            getProduct(productCodeText.text.toString(), nameText, this, progressBar)
+            getProduct(productCodeText.text.toString(), nameText, this, progressBar, buttonApi)
         }
 
 //        var buttonLog: View = findViewById(R.id.buttonTestLogElements)

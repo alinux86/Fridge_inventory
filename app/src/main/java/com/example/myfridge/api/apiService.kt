@@ -3,6 +3,7 @@ package com.example.myfridge.api
 import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -29,14 +30,14 @@ private val retrofit by lazy {
 private val theApiService by lazy { retrofit.create(apiService::class.java) }
 
 
-fun getProduct(productCode : String, productNameTextField: EditText, context: Context, progressBar: ProgressBar) {
+fun getProduct(productCode : String, productNameTextField: EditText, context: Context, progressBar: ProgressBar, buttonApi: Button) {
     progressBar.visibility = View.VISIBLE
-    //buttonApi.isEnabled = false
+    buttonApi.isEnabled = false
     val call = theApiService.getProductInfo(productCode)
     call.enqueue(object : Callback<ProductInfo> {
         override fun onResponse(call: Call<ProductInfo>, response: Response<ProductInfo>) {
             // Activer le bouton
-            // buttonApi.isEnabled = true
+            buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
             Log.i("contenu", "Raw response: ${response}")
             if (response.isSuccessful) {
@@ -55,7 +56,7 @@ fun getProduct(productCode : String, productNameTextField: EditText, context: Co
         }
 
         override fun onFailure(call: Call<ProductInfo>, t: Throwable) {
-            //buttonApi.isEnabled = true
+            buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
             Log.e("MainActivity", "Failed to get result: ${t.message}")
             showToastError (context, "Error in the request: ${t.message}")
