@@ -31,9 +31,12 @@ private val theApiService by lazy { retrofit.create(apiService::class.java) }
 
 fun getProduct(productCode : String, productNameTextField: EditText, context: Context, progressBar: ProgressBar) {
     progressBar.visibility = View.VISIBLE
+    //buttonApi.isEnabled = false
     val call = theApiService.getProductInfo(productCode)
     call.enqueue(object : Callback<ProductInfo> {
         override fun onResponse(call: Call<ProductInfo>, response: Response<ProductInfo>) {
+            // Activer le bouton
+            // buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
             Log.i("contenu", "Raw response: ${response}")
             if (response.isSuccessful) {
@@ -52,6 +55,7 @@ fun getProduct(productCode : String, productNameTextField: EditText, context: Co
         }
 
         override fun onFailure(call: Call<ProductInfo>, t: Throwable) {
+            //buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
             Log.e("MainActivity", "Failed to get result: ${t.message}")
             showToastError (context, "Error in the request: ${t.message}")
