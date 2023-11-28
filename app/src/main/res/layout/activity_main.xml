@@ -9,64 +9,34 @@
 
 
     <LinearLayout
-        android:id="@+id/loc_button_layout"
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp">
 
-        <Button
-            android:id="@+id/button_fridge"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:padding="2dp"
-            android:layout_margin="5dp"
-            android:text="Fridge" />
 
-        <Button
-            android:id="@+id/button_freezer"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0.5"
-            android:padding="2dp"
-            android:layout_margin="5dp"
-
-            android:text="Freezer" />
-
-        <Button
-            android:id="@+id/button_pantry"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0.5"
-            android:padding="2dp"
-            android:layout_margin="5dp"
-
-            android:text="Pantry" />
-
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="com.example.myfridge.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_header" />
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonAddElement"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButtonAddElement"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loc_button_layout" />
+        app:layout_constraintTop_toBottomOf="@id/header_container" />
 
     <TextView
         android:id="@+id/textViewNoItem"
@@ -78,7 +48,7 @@
         android:textStyle="italic"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loc_button_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/header_container" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
