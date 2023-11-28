@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import com.example.myfridge.api.getProduct
 import com.example.myfridge.data.Fridge
 import com.example.myfridge.data.NewProduct
@@ -38,6 +39,8 @@ class ActivityAddPersistentData : AppCompatActivity() {
         val quantityText: EditText = findViewById(R.id.editTextNewProductQuantity)
         val dateText: EditText = findViewById(R.id.editTextNewProductDate)
         val productCodeText : EditText = findViewById(R.id.editTextBarcode)
+        val brandText: TextView = findViewById(R.id.textViewBrand)
+        val ecoscoreText: TextView = findViewById(R.id.textViewEcoscoreGrade)
 
         val stock: String? = intent.getStringExtra("Stock")
 
@@ -69,7 +72,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
             Log.i("contenu", "Call api")
             layout.clearFocus()
             imm.hideSoftInputFromWindow(layout.windowToken, 0)
-            getProduct(productCodeText.text.toString(), nameText, this, progressBar, buttonApi)
+            getProduct(productCodeText.text.toString(), nameText, this, progressBar, buttonApi, brandText, ecoscoreText)
         }
 
 //        var buttonLog: View = findViewById(R.id.buttonTestLogElements)

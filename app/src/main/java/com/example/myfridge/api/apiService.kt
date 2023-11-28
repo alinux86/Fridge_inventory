@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.example.myfridge.model.ProductInfo
 import retrofit2.Call
@@ -30,7 +31,14 @@ private val retrofit by lazy {
 private val theApiService by lazy { retrofit.create(apiService::class.java) }
 
 
-fun getProduct(productCode : String, productNameTextField: EditText, context: Context, progressBar: ProgressBar, buttonApi: Button) {
+fun getProduct(
+    productCode : String,
+    productNameTextField: EditText,
+    context: Context,
+    progressBar: ProgressBar,
+    buttonApi: Button,
+    brandText: TextView,
+    ecoscoreText: TextView) {
     progressBar.visibility = View.VISIBLE
     buttonApi.isEnabled = false
     val call = theApiService.getProductInfo(productCode)
@@ -44,6 +52,8 @@ fun getProduct(productCode : String, productNameTextField: EditText, context: Co
                 response.body()?.let { productInfo ->
                     Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                     productNameTextField.setText(productInfo.product?.product_name)
+                    brandText.setText(productInfo.product?.brands)
+                    ecoscoreText.setText(productInfo.product?.ecoscore_grade)
                     Log.i("contenu", "Raw response : ${response.body()}")
                     showToastSuccess(context, "Product found!")
                 }
