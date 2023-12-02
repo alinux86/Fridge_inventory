@@ -52,19 +52,22 @@ fun getProduct(
                 response.body()?.let { productInfo ->
                     Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                     productNameTextField.setText(productInfo.product?.product_name)
-                    brandText.setText(productInfo.product?.brands)
-                    ecoscoreText.setText(productInfo.product?.ecoscore_grade)
+                    // mise à jour textfield
+                    brandText.text = "Brand: ${(productInfo.product?.brands)}"
+                    ecoscoreText.text = "Ecoscore Grade: ${(productInfo.product?.ecoscore_grade)}"
+
+                    brandText.visibility = if (productInfo.product?.brands.isNullOrBlank()) View.GONE else View.VISIBLE
+                    ecoscoreText.visibility = if (productInfo.product?.ecoscore_grade.isNullOrBlank()) View.GONE else View.VISIBLE
                     Log.i("contenu", "Raw response : ${response.body()}")
                     showToastSuccess(context, "Product found!")
                 }
             } else {
                 if (response.code() == 404) {
                     // Traitement spécifique pour le code 404
-                    showToastError(context, "Product not found. Please try again.")
-                    }
+                    showToast404(context, "Product not found. Please try again.")
+                }
             }
         }
-
         override fun onFailure(call: Call<ProductInfo>, t: Throwable) {
             buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
@@ -73,16 +76,12 @@ fun getProduct(
         }
     })
 }
-
-
 private fun showToastError(context: Context, message : String) {
     Toast.makeText(context , message, Toast.LENGTH_SHORT).show()
 }
-
 private fun showToastSuccess(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
-
 private fun showToast404(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }

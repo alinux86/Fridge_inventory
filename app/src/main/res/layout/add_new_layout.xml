@@ -113,13 +113,13 @@
             android:id="@+id/textViewBrand"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Brand" />
+            android:text="" />
 
         <TextView
             android:id="@+id/textViewEcoscoreGrade"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Ecoscore Grade" />
+            android:text="" />
 
 
     </LinearLayout>

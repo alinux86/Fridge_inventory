@@ -1,0 +1,58 @@
+\documentclass{beamer}
+\usetheme{Singapore}
+\usepackage{babel}
+
+\title{Présentation de l'application MyFridge}
+\author{Rafael Texeira, Alexander Mussitelli}
+\begin{document}
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+\begin{frame}{L'API}
+	\url{https://fr.openfoodfacts.org/data}
+	
+	\begin{block}{la requête}
+		get /api/v2/product/\{barcode\}
+	\end{block}
+	\begin{block}{la réponse}
+		\url{https://openfoodfacts.github.io/openfoodfacts-server/api/ref-v2/#get-/api/v2/product/-barcode-}	
+	\end{block}
+\end{frame}
+\begin{frame}{MainActivity}
+	\begin{block}{OnCreate}
+		\item Initialisation de l'intent
+		\item Titre de l'application
+		\item Layout
+	\end{block}
+	\begin{block}{OnResume}
+		\item fridge, les données
+		\item RecyclerView
+	\end{block}		
+\end{frame}
+\begin{frame}{ActivityAddPersistentData}
+	
+\end{frame}
+\begin{frame}{Modèles}
+	\begin{block}{Product}
+		\item @StringRes val name: Int,
+		\item @StringRes val quantity: Int,
+		\item @StringRes var date: Int
+	\end{block}
+\end{frame}
+\begin{frame}{apiService}
+	
+\end{frame}
+\begin{frame}{Modèles}
+	\begin{block}{ProductInfo}
+		\item val code: String?,
+		\item val product: ProductApi?,
+		\item val status: Int?,
+		\item val status\_verbose: String?
+	\end{block}
+	\begin{block}{ProductApi}
+		\item val brands: String?,
+		\item val ecoscore\_grade: String?,
+		\item val product\_name: String?
+	\end{block}
+\end{frame}
+\end{document}

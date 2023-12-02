@@ -75,26 +75,9 @@ class ActivityAddPersistentData : AppCompatActivity() {
             getProduct(productCodeText.text.toString(), nameText, this, progressBar, buttonApi, brandText, ecoscoreText)
         }
 
-//        var buttonLog: View = findViewById(R.id.buttonTestLogElements)
-//        buttonLog.setOnClickListener {
-//            logData()
-//        }
-
-//        var buttonDelete: View = findViewById(R.id.buttonTestDelete)
-//        buttonDelete.setOnClickListener {
-//            clearJson()
-//            logData()
-//            finish()
-//        }
-//        logData()
     }
-
     fun logData() {
         Log.i("debug", fridge.getDataString())
     }
-
-//    fun clearJson() {
-//        fridge.clearAll()
-//    }
 
 }
