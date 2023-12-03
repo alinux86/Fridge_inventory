@@ -39,7 +39,9 @@
             android:layout_height="60dp"
             android:ems="10"
             android:hint="Barcode"
-            android:text="4012359144003"/>
+            />
+        <!--Produit exemple-->
+        <!--android:text="4012359144003"-->
 
         <LinearLayout
             android:id="@+id/buttonAndProgressBarContainer"

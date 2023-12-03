@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.adapters.ProductAdapter
 import com.example.myfridge.adapters.ProductAdapterListener
 import com.example.myfridge.data.Fridge
-import com.example.myfridge.data.Product
+import com.example.myfridge.model.Product
 
 
 class MainActivity : AppCompatActivity(), ProductAdapterListener  {

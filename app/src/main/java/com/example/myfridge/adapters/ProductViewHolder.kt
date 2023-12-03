@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.R
+import com.example.myfridge.model.Product
 
 class ProductViewHolder(view : View, val context: Context) : RecyclerView.ViewHolder(view) {
     val name: EditText = view.findViewById(R.id.editTextProductName)
@@ -13,7 +14,7 @@ class ProductViewHolder(view : View, val context: Context) : RecyclerView.ViewHo
     /*val editTextQuantity: EditText = itemView.findViewById(R.id.editTextQuantity)
     val editTextDate: EditText = itemView.findViewById(R.id.editTextDate)
 */
-    fun setupHolder(product: com.example.myfridge.data.Product) {
+    fun setupHolder(product: Product) {
         // Bind data to the EditText fields
       /*  editTextProductName.setText(product.name)
         editTextQuantity.setText(product.quantity.toString())

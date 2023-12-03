@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import com.example.myfridge.data.Product
+import com.example.myfridge.model.Product
 import java.util.Calendar
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {

@@ -12,9 +12,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfridge.DatePickerFragment
 import com.example.myfridge.R
-import com.example.myfridge.data.Product
+import com.example.myfridge.model.Product
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale

@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.myfridge.api.getProduct
 import com.example.myfridge.data.Fridge
-import com.example.myfridge.data.NewProduct
+import com.example.myfridge.model.NewProduct
 
 
 class ActivityAddPersistentData : AppCompatActivity() {

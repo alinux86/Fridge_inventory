@@ -1,7 +1,7 @@
 package com.example.myfridge.data
 
-import android.util.Log
-import android.widget.Toast
+import com.example.myfridge.model.NewProduct
+import com.example.myfridge.model.Product
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedWriter
@@ -9,20 +9,8 @@ import java.io.File
 import java.io.FileWriter
 import java.io.Writer
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
-
-class Product(
-    var name: String,
-    var quantity: String,
-    var date: String,
-    val stock: String,
-    var index: Int
-) {}
-
-class NewProduct(val name: String, val quantity: String, val date: String, val stock: String) {}
 
 class Fridge(private var filesDir: File) {
 
