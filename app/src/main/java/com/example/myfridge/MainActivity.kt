@@ -3,6 +3,7 @@ package com.example.myfridge
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -62,9 +63,12 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     }
 
     override fun onDeleteItem(product: Product, position: Int) {
-        fridge.deleteItem(product)
+        Log.i("debug", "position removed : ${position}")
+        Log.i("debug", "index removed : ${product.index}")
+        fridge.deleteItem(product, position)
         adapter.notifyItemRemoved(position)
-        adapter.notifyItemRangeChanged(position, adapter.itemCount)
+//        adapter.notifyItemRangeChanged(position, adapter.itemCount)
+//        adapter.notifyDataSetChanged()
         setNoItemViewVisibility()
     }
 

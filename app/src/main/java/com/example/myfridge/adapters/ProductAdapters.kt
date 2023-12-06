@@ -40,6 +40,7 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.setupHolder(products[position])
+        holder.adapterPosition
 
         var product: Product = products[position]
 
@@ -76,18 +77,17 @@ class ProductAdapter(
             setDateTextColor(dateTextView, product, defaultColor)
         }
         deleteButton.setOnClickListener {
-            listener.onDeleteItem(product, position)
+            listener.onDeleteItem(product, holder.adapterPosition)
 
         }
-
     }
 
     fun setDateTextColor(dateTextView : EditText, product: Product, defaultColor: Int) {
-        Log.i("debug", "setDateTextColor")
+//        Log.i("debug", "setDateTextColor")
         if (isDateExpired(product.date)) {
             dateTextView.setTextColor(Color.parseColor("red"))
         } else {
-            Log.i("debug", "defaultColor")
+//            Log.i("debug", "defaultColor")
             dateTextView.setTextColor(defaultColor)
         }
     }

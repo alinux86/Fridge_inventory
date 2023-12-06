@@ -117,9 +117,10 @@ class Fridge(private var filesDir: File) {
         saveData()
     }
 
-    fun deleteItem(product: Product) {
-        productsListData.removeAt(product.index)
-        recalculateIndex()
+    fun deleteItem(product: Product, position: Int) {
+//        productsListData.removeIf(listEl -> listEl.index == product.index )
+        productsListData.removeAt(position)
+//        recalculateIndex()
         saveData()
     }
 
