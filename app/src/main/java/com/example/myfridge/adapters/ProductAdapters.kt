@@ -1,7 +1,6 @@
 package com.example.myfridge.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,7 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.setupHolder(products[position])
-        holder.adapterPosition
+        //holder.adapterPosition
 
         var product: Product = products[position]
 
@@ -58,7 +57,6 @@ class ProductAdapter(
             if (!hasFocus) {
                 product.name = nameTextView.text.toString()
                 listener.onUpdateItem(product, position)
-//                nameTextView.clearFocus()
             }
         }
         quantityTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -78,16 +76,13 @@ class ProductAdapter(
         }
         deleteButton.setOnClickListener {
             listener.onDeleteItem(product, holder.adapterPosition)
-
         }
     }
 
     fun setDateTextColor(dateTextView : EditText, product: Product, defaultColor: Int) {
-//        Log.i("debug", "setDateTextColor")
         if (isDateExpired(product.date)) {
             dateTextView.setTextColor(Color.parseColor("red"))
         } else {
-//            Log.i("debug", "defaultColor")
             dateTextView.setTextColor(defaultColor)
         }
     }
@@ -100,14 +95,11 @@ class ProductAdapter(
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
             val today = calendar.time
-//            Log.i("debug", "Today $today")
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             val parsedDate = dateFormat.parse(dateString) ?: Date(0)
-//            Log.i("debug", "ParsedDate $parsedDate")
             if (parsedDate <= today) {
                 isDateExpired = true
             }
-//            Log.i("debug", "isDateExpired ? $isDateExpired")
         }
         return isDateExpired
     }

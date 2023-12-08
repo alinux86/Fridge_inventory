@@ -1,7 +1,6 @@
 package com.example.myfridge.api
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -47,10 +46,8 @@ fun getProduct(
             // Activer le bouton
             buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
-            Log.i("contenu", "Raw response: ${response}")
             if (response.isSuccessful) {
                 response.body()?.let { productInfo ->
-                    Log.i("contenu", "onResponse : ${productInfo.product?.product_name}")
                     productNameTextField.setText(productInfo.product?.product_name)
                     // mise à jour textfield
                     brandText.text = "Brand: ${(productInfo.product?.brands)}"
@@ -58,7 +55,6 @@ fun getProduct(
 
                     brandText.visibility = if (productInfo.product?.brands.isNullOrBlank()) View.GONE else View.VISIBLE
                     ecoscoreText.visibility = if (productInfo.product?.ecoscore_grade.isNullOrBlank()) View.GONE else View.VISIBLE
-                    Log.i("contenu", "Raw response : ${response.body()}")
                     showToastSuccess(context, "Product found!")
                 }
             } else {
@@ -71,7 +67,6 @@ fun getProduct(
         override fun onFailure(call: Call<ProductInfo>, t: Throwable) {
             buttonApi.isEnabled = true
             progressBar.visibility = View.GONE
-            Log.e("MainActivity", "Failed to get result: ${t.message}")
             showToastError (context, "Error in the request: ${t.message}")
         }
     })

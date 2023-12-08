@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -21,7 +20,6 @@ class ActivityAddPersistentData : AppCompatActivity() {
     lateinit var fridge: Fridge
     lateinit var layout: View
     var stock: String = "Fridge"
-    //lateinit val buttonApi: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +40,15 @@ class ActivityAddPersistentData : AppCompatActivity() {
         val brandText: TextView = findViewById(R.id.textViewBrand)
         val ecoscoreText: TextView = findViewById(R.id.textViewEcoscoreGrade)
 
-        val stock: String? = intent.getStringExtra("Stock")
+        //val stock: String? = intent.getStringExtra("Stock")
 
         var buttonAdd: View = findViewById(R.id.buttonAddElement)
         val buttonApi: Button = findViewById(R.id.buttonGetProduct) as Button
-
 
         dateText.setOnClickListener {
             layout.clearFocus()
             imm.hideSoftInputFromWindow(layout.windowToken, 0)
             val newFragment = DatePickerFragment.newInstance(dateText)
-
             newFragment.show(supportFragmentManager, "datePicker")
         }
 
@@ -64,20 +60,16 @@ class ActivityAddPersistentData : AppCompatActivity() {
                 stock = this.stock
             )
             fridge.addItem(newProduct)
-            logData()
             finish()
         }
 
         buttonApi.setOnClickListener{
-            Log.i("contenu", "Call api")
             layout.clearFocus()
             imm.hideSoftInputFromWindow(layout.windowToken, 0)
             getProduct(productCodeText.text.toString(), nameText, this, progressBar, buttonApi, brandText, ecoscoreText)
         }
-
     }
-    fun logData() {
-        Log.i("debug", fridge.getDataString())
-    }
-
+//    fun logData() {
+//        Log.i("debug", fridge.getDataString())
+//    }
 }

@@ -38,11 +38,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val dateString = "${day.toString().padStart(2,'0')}.${(month+1).toString().padStart(2,'0')}.${year}"
-//        val activity = activity as ActivityAddPersistentDataTest?
-//        activity?.findViewById<EditText>(R.id.editTextNewProductDate)?.setText(dateString)
         editText?.setText(dateString)
-//        product?.date = dateString
-
         return
     }
 }

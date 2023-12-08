@@ -11,18 +11,9 @@ class ProductViewHolder(view : View, val context: Context) : RecyclerView.ViewHo
     val name: EditText = view.findViewById(R.id.editTextProductName)
     val quantity : EditText = view.findViewById(R.id.editTextQuantity)
     val date : EditText = view.findViewById(R.id.editTextDate)
-    /*val editTextQuantity: EditText = itemView.findViewById(R.id.editTextQuantity)
-    val editTextDate: EditText = itemView.findViewById(R.id.editTextDate)
-*/
     fun setupHolder(product: Product) {
-        // Bind data to the EditText fields
-      /*  editTextProductName.setText(product.name)
-        editTextQuantity.setText(product.quantity.toString())
-        editTextDate.setText(product.date)*/
         name.setText(product.name)
         quantity.setText(product.quantity)
         date.setText(product.date)
-
-
     }
 }

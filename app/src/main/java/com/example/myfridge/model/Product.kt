@@ -1,13 +1,5 @@
 package com.example.myfridge.model
 
-import androidx.annotation.StringRes
-
-//
-//data class Product(
-//    @StringRes val name: Int,
-//    @StringRes val quantity: Int,
-//    @StringRes var date: Int
-//)
 data class Product(
     var name: String,
     var quantity: String,

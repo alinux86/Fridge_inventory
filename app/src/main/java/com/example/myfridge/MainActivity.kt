@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
     override fun onResume() {
         super.onResume()
 
-
         layout.clearFocus()
 
         fridge = Fridge(filesDir)
@@ -57,23 +56,18 @@ class MainActivity : AppCompatActivity(), ProductAdapterListener  {
 
     override fun onPause() {
         super.onPause()
-//        var layout : View = findViewById(R.id.activity_main_layout)
         layout.clearFocus()
         fridge.saveData()
     }
 
     override fun onDeleteItem(product: Product, position: Int) {
-        Log.i("debug", "position removed : ${position}")
-        Log.i("debug", "index removed : ${product.index}")
-        fridge.deleteItem(product, position)
+        fridge.deleteItem(position)
         adapter.notifyItemRemoved(position)
-//        adapter.notifyItemRangeChanged(position, adapter.itemCount)
-//        adapter.notifyDataSetChanged()
         setNoItemViewVisibility()
     }
 
     override fun onUpdateItem(newProduct: Product, position: Int) {
-        fridge.updateItem(/*newProduct*/)
+        fridge.updateItem()
     }
 
     private fun setNoItemViewVisibility() {

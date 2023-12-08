@@ -23,11 +23,11 @@ class Fridge(private var filesDir: File) {
             val date2 = product2.date
 
             when {
-                date1.isNullOrEmpty() && date2.isNullOrEmpty() -> 0 // Les deux dates sont vides, considérez-les égales
-                date1.isNullOrEmpty() -> -1 // La première date est vide, placez-la avant
-                date2.isNullOrEmpty() -> 1 // La deuxième date est vide, placez-la avant
+                date1.isNullOrEmpty() && date2.isNullOrEmpty() -> 0 // Les deux dates sont vides, on les considère égales
+                date1.isNullOrEmpty() -> -1 // La première date est vide, la placer avant
+                date2.isNullOrEmpty() -> 1 // La deuxième date est vide, la placer avant
                 else -> {
-                    // Les deux dates sont non vides, comparez-les
+                    // Les deux dates sont non vides, les comparer
                     val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                     val parsedDate1 = dateFormat.parse(date1) ?: Date(0)
                     val parsedDate2 = dateFormat.parse(date2) ?: Date(0)
@@ -113,14 +113,12 @@ class Fridge(private var filesDir: File) {
         saveData()
     }
 
-    fun updateItem(/*newProduct: Product*/) {
+    fun updateItem() {
         saveData()
     }
 
-    fun deleteItem(product: Product, position: Int) {
-//        productsListData.removeIf(listEl -> listEl.index == product.index )
+    fun deleteItem(position: Int) {
         productsListData.removeAt(position)
-//        recalculateIndex()
         saveData()
     }
 
@@ -132,16 +130,16 @@ class Fridge(private var filesDir: File) {
         return string
     }
 
-    fun clearAll() {
-        val file = File(filesDir, "data.json")
-        if (file.exists()) {
-            var output: Writer
-
-            output = BufferedWriter(FileWriter(file))
-            output.write("")
-            output.close()
-        }
-    }
+//    fun clearAll() {
+//        val file = File(filesDir, "data.json")
+//        if (file.exists()) {
+//            var output: Writer
+//
+//            output = BufferedWriter(FileWriter(file))
+//            output.write("")
+//            output.close()
+//        }
+//    }
 
     fun length(): Int {
         return productsListData.size
