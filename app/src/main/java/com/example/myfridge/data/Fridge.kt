@@ -1,7 +1,7 @@
 package com.example.myfridge.data
 
-import android.util.Log
-import android.widget.Toast
+import com.example.myfridge.model.NewProduct
+import com.example.myfridge.model.Product
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedWriter
@@ -9,20 +9,8 @@ import java.io.File
 import java.io.FileWriter
 import java.io.Writer
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
-
-class Product(
-    var name: String,
-    var quantity: String,
-    var date: String,
-    val stock: String,
-    var index: Int
-) {}
-
-class NewProduct(val name: String, val quantity: String, val date: String, val stock: String) {}
 
 class Fridge(private var filesDir: File) {
 
@@ -35,11 +23,11 @@ class Fridge(private var filesDir: File) {
             val date2 = product2.date
 
             when {
-                date1.isNullOrEmpty() && date2.isNullOrEmpty() -> 0 // Les deux dates sont vides, considérez-les égales
-                date1.isNullOrEmpty() -> -1 // La première date est vide, placez-la avant
-                date2.isNullOrEmpty() -> 1 // La deuxième date est vide, placez-la avant
+                date1.isNullOrEmpty() && date2.isNullOrEmpty() -> 0 // Les deux dates sont vides, on les considère égales
+                date1.isNullOrEmpty() -> -1 // La première date est vide, la placer avant
+                date2.isNullOrEmpty() -> 1 // La deuxième date est vide, la placer avant
                 else -> {
-                    // Les deux dates sont non vides, comparez-les
+                    // Les deux dates sont non vides, les comparer
                     val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                     val parsedDate1 = dateFormat.parse(date1) ?: Date(0)
                     val parsedDate2 = dateFormat.parse(date2) ?: Date(0)
@@ -125,13 +113,12 @@ class Fridge(private var filesDir: File) {
         saveData()
     }
 
-    fun updateItem(/*newProduct: Product*/) {
+    fun updateItem() {
         saveData()
     }
 
-    fun deleteItem(product: Product) {
-        productsListData.removeAt(product.index)
-        recalculateIndex()
+    fun deleteItem(position: Int) {
+        productsListData.removeAt(position)
         saveData()
     }
 
@@ -143,16 +130,16 @@ class Fridge(private var filesDir: File) {
         return string
     }
 
-    fun clearAll() {
-        val file = File(filesDir, "data.json")
-        if (file.exists()) {
-            var output: Writer
-
-            output = BufferedWriter(FileWriter(file))
-            output.write("")
-            output.close()
-        }
-    }
+//    fun clearAll() {
+//        val file = File(filesDir, "data.json")
+//        if (file.exists()) {
+//            var output: Writer
+//
+//            output = BufferedWriter(FileWriter(file))
+//            output.write("")
+//            output.close()
+//        }
+//    }
 
     fun length(): Int {
         return productsListData.size

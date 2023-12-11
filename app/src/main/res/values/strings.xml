@@ -14,4 +14,6 @@
     <string name="date_2">07.11.2023</string>
     <string name="date_3">18.05.2024</string>
     <string name="date_4">20.11.2023</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
