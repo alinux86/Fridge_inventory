@@ -99,9 +99,7 @@ class ActivityAddPersistentData : AppCompatActivity() {
                 setAddButtonState()
                 if (!s.isNullOrEmpty()) {
                     rejectValueZero()
-
                 }
-
             }
         })
         dateText.addTextChangedListener(object : TextWatcher {

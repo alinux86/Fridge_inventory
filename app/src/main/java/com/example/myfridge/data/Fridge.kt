@@ -75,8 +75,8 @@ class Fridge(private var filesDir: File) {
         var jsonDataArray = JSONArray()
         for (item in productsListData) {
             var jsonObjectItem = JSONObject()
-            jsonObjectItem.put("productName", item.name)
-            jsonObjectItem.put("quantity", item.quantity)
+            jsonObjectItem.put("productName", item.name.trim())
+            jsonObjectItem.put("quantity", item.quantity.trim())
             jsonObjectItem.put("date", item.date)
             jsonObjectItem.put("stock", item.stock)
             jsonDataArray.put(jsonObjectItem)
